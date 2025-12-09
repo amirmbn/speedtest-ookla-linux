@@ -2,8 +2,7 @@
 One-command Bash installer and runner for Ookla Speedtest CLI on Linux.
 <br><br>
 <div align="right">
-
--  کد زیر رو در سرور اوبونتو وارد و تا اتمام نصب صبر کنید، بعد از اجرا شما باید آیدی مقصد رو وارد کنید.
+- کد زیر رو در سرور اوبونتو وارد و تا اتمام نصب صبر کنید، بعد از اجرا شما باید آیدی مقصد رو وارد کنید.
 </div>
 <br>
 <div align="left">
