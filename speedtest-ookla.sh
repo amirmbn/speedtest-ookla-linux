@@ -69,12 +69,33 @@ echo ""
 
 # Install Speedtest
 echo -e "${YELLOW}[3/4] Installing Speedtest CLI...${NC}"
-apt-get install -y speedtest
-if [ $? -eq 0 ]; then
+
+# Update package list first
+apt-get update
+
+# Try different package names
+if apt-get install -y speedtest 2>/dev/null; then
     echo -e "${GREEN}✓ Speedtest installed successfully${NC}"
+elif apt-get install -y speedtest-cli 2>/dev/null; then
+    echo -e "${GREEN}✓ Speedtest installed successfully (as speedtest-cli)${NC}"
+elif apt-get install -y ookla-speedtest-cli 2>/dev/null; then
+    echo -e "${GREEN}✓ Speedtest installed successfully (as ookla-speedtest-cli)${NC}"
 else
     echo -e "${RED}✗ Error installing Speedtest${NC}"
-    exit 1
+    echo -e "${YELLOW}Trying alternative installation method...${NC}"
+    
+    # Alternative: Direct download from Ookla
+    wget -O /tmp/speedtest.tgz https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-linux-$(uname -m).tgz
+    tar -xzf /tmp/speedtest.tgz -C /usr/local/bin
+    chmod +x /usr/local/bin/speedtest
+    rm /tmp/speedtest.tgz
+    
+    if command -v speedtest &> /dev/null; then
+        echo -e "${GREEN}✓ Speedtest installed successfully (via direct download)${NC}"
+    else
+        echo -e "${RED}✗ All installation methods failed${NC}"
+        exit 1
+    fi
 fi
 echo ""
 
